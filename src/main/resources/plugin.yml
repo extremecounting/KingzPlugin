@@ -1,0 +1,36 @@
+name: Dungeon
+version: '${project.version}'
+main: com.extremecounting.dungeon.Dungeon
+api-version: 1.20
+authors: [ extremecounting ]
+description: Plugin for making RPG
+commands:
+  day:
+    description: makes it day
+    usage: /<command>
+  lightningrod:
+    description: gives a lightning rod
+    usage: /<command>
+  bandit:
+    description: summons a bandit
+    usage: /<command>
+  spear:
+    description: gives a primitive spear
+    usage: /<command>
+  givestuff:
+    description: gives stuff
+    usage: /<command>
+  island:
+    description: island commands
+    usage: /<command> <arg>
+    aliases:
+      - is
+  test1:
+    description: test command
+    usage: /<command>
+  createSpawner:
+    description: creates a spawner
+    usage: /<command> <arg> <arg> <arg> <arg> <arg>
+  spawnertest:
+    description: tests the config files for spawner
+    usage: /<commmand>
