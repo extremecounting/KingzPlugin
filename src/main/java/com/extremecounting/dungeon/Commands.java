@@ -2,7 +2,7 @@ package com.extremecounting.dungeon;
 
 import com.extremecounting.dungeon.itemManager.MaterialManager;
 import com.extremecounting.dungeon.itemManager.WeaponManager;
-import com.extremecounting.dungeon.mobs.Bandit;
+import com.extremecounting.dungeon.mobs.BanditSpawner;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.command.Command;
@@ -27,7 +27,7 @@ public class Commands implements CommandExecutor {
             player.getInventory().addItem(WeaponManager.lightningRod);
         }
         else if (cmd.getName().equalsIgnoreCase("bandit")) {
-            Bandit.spawnBandit(player.getLocation());
+            BanditSpawner.spawnBandit(player);
         }
         else if (cmd.getName().equalsIgnoreCase("spear")) {
             player.getInventory().addItem(WeaponManager.pSpear);

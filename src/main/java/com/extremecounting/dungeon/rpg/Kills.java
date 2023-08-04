@@ -5,6 +5,7 @@ import com.extremecounting.dungeon.island.IslandUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -20,9 +21,18 @@ public class Kills implements Listener {
             return;
         }
         if (!(event.getDamager() instanceof Player)) {
+            event.setCancelled(true);
+            event.getEntity().remove();
             return;
         }
         Player player = (Player) event.getDamager();
+
+        if (event.getEntity() instanceof Zombie) {
+            if (event.getEntity().getScoreboardTags().contains("bandit")) {
+
+            }
+        }
+
         FileConfiguration playerData = IslandUtility.getIslandConfig(Dungeon.usersFolder, player);
         playerData.set("basic.kills", ((int) playerData.get("basic.kills")) + 1);
         try {
@@ -30,6 +40,7 @@ public class Kills implements Listener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
     }
 }

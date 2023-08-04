@@ -11,13 +11,13 @@ import com.extremecounting.dungeon.itemManager.MaterialManager;
 import com.extremecounting.dungeon.itemManager.ToolManager;
 import com.extremecounting.dungeon.itemManager.UpgradeManager;
 import com.extremecounting.dungeon.itemManager.WeaponManager;
-import com.extremecounting.dungeon.mobs.BanditSpawner;
-import com.extremecounting.dungeon.mobs.SpawnerCommands;
-import com.extremecounting.dungeon.mobs.SpawnerUtil;
+import com.extremecounting.dungeon.mobs.*;
 import com.extremecounting.dungeon.rpg.Kills;
 import com.extremecounting.dungeon.weapons.LightningRod;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -65,11 +65,15 @@ public final class Dungeon extends JavaPlugin {
 
         SpawnerUtil.pluginInstance = this;
 
+        SpawnerUtil.getBanditSpawners("banditspawner");
+        SpawnerUtil.spawnerOn = true;
+
         Bukkit.getPluginManager().registerEvents(new BlockBreakDing(), this);
         Bukkit.getPluginManager().registerEvents(new LightningRod(), this);
         Bukkit.getPluginManager().registerEvents(new InteractEvent(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
         Bukkit.getPluginManager().registerEvents(new Kills(), this);
+        Bukkit.getPluginManager().registerEvents(new Death(), this);
 
         mainNameSpacedKey = new NamespacedKey(this, "Dungeon");
 
@@ -85,10 +89,12 @@ public final class Dungeon extends JavaPlugin {
         getCommand("island").setExecutor(islandCommands);
 
         StaffCommands staffCommands = new StaffCommands();
-        getCommand("createSpawner").setExecutor(staffCommands);
+        getCommand("suicide").setExecutor(staffCommands);
 
         SpawnerCommands spawnerCommands = new SpawnerCommands();
         getCommand("spawnertest").setExecutor(spawnerCommands);
+        getCommand("spawner").setExecutor(spawnerCommands);
+        getCommand("createspawner").setExecutor(spawnerCommands);
 
         WeaponManager.init();
         MaterialManager.init();
@@ -101,10 +107,20 @@ public final class Dungeon extends JavaPlugin {
         Bukkit.addRecipe(SharpenerRecipes.pSharpener);
         Bukkit.addRecipe(SpearRecipes.pSpear);
 
+        SpawnerUtil.startSpawning();
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+
+        List<World> worlds = Bukkit.getServer().getWorlds();
+        for (World world : worlds) {
+            List<Entity> entities = world.getEntities();
+            for (Entity entity : entities) {
+                entity.remove();
+            }
+        }
+
     }
 }

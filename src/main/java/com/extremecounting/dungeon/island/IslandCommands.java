@@ -1,12 +1,8 @@
 package com.extremecounting.dungeon.island;
 
 import com.extremecounting.dungeon.Dungeon;
-import com.extremecounting.dungeon.itemManager.MaterialManager;
-import com.extremecounting.dungeon.itemManager.WeaponManager;
-import com.extremecounting.dungeon.mobs.Bandit;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,7 +12,6 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 public class IslandCommands implements CommandExecutor {
 
