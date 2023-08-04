@@ -28,9 +28,15 @@ commands:
   test1:
     description: test command
     usage: /<command>
-  createSpawner:
+  createspawner:
     description: creates a spawner
     usage: /<command> <arg> <arg> <arg> <arg> <arg>
   spawnertest:
     description: tests the config files for spawner
     usage: /<commmand>
+  spawner:
+    description: spawner info
+    usage: /<command> <arg> <arg>
+  suicide:
+    description: commits suicide
+    usage: /<command>
