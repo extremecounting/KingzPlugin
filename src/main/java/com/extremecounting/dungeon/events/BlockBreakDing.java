@@ -17,6 +17,7 @@ public class BlockBreakDing implements Listener {
 
     @EventHandler
     public void BlockBreak(BlockBreakEvent event) {
+        /*
         Random random = new Random();
 
         Player player = event.getPlayer();
@@ -33,6 +34,8 @@ public class BlockBreakDing implements Listener {
                 player.sendMessage(entity.getName());
             }
         }
+
+         */
 
     }
 }

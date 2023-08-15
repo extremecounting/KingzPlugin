@@ -27,7 +27,7 @@ public class Commands implements CommandExecutor {
             player.getInventory().addItem(WeaponManager.lightningRod);
         }
         else if (cmd.getName().equalsIgnoreCase("bandit")) {
-            BanditSpawner.spawnBandit(player);
+
         }
         else if (cmd.getName().equalsIgnoreCase("spear")) {
             player.getInventory().addItem(WeaponManager.pSpear);

@@ -17,7 +17,7 @@ public class SpawnerUtil {
 
 
     public static Plugin pluginInstance;
-    final static int spawnDelayTicks = 40;
+    final static int spawnDelayTicks = 80;
 
     public static List<BanditSpawner> banditSpawners = new ArrayList<>();
     public static boolean spawnerOn;
@@ -44,13 +44,14 @@ public class SpawnerUtil {
     public static void getBanditSpawners(String folderName) {
         List<BanditSpawner> banditSpawnerList = new ArrayList<>();
         File folder = new File(Dungeon.spawnerFolder, folderName);
+        folder.mkdirs();
         File[] files = folder.listFiles();
         for (File file : files) {
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
             BanditSpawner banditSpawner = new BanditSpawner((String) config.get("name"),
                     (Location) config.get("location"), (Integer) config.get("maxmobs"),
                     (Integer) config.get("spawnrate"), (Integer) config.get("mobsperspawn"),
-                    (Integer) config.get("sizeX"), (Integer) config.get("sizeZ"));
+                    (Integer) config.get("sizeX"), (Integer) config.get("sizeZ"), (Integer) config.get("variant"));
             banditSpawnerList.add(banditSpawner);
         }
         if (banditSpawnerList.size() < 1) {
@@ -81,7 +82,7 @@ public class SpawnerUtil {
                 BanditSpawner banditSpawner = new BanditSpawner((String) config.get("name"),
                         (Location) config.get("location"), (Integer) config.get("maxmobs"),
                         (Integer) config.get("spawnrate"), (Integer) config.get("mobsperspawn"),
-                        (Integer) config.get("sizeX"), (Integer) config.get("sizeZ"));
+                        (Integer) config.get("sizeX"), (Integer) config.get("sizeZ"), (Integer) config.get("variant"));
                 banditSpawners.add(banditSpawner);
             }
         }

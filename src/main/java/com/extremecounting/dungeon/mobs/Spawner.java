@@ -3,9 +3,11 @@ package com.extremecounting.dungeon.mobs;
 import com.extremecounting.dungeon.Dungeon;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,7 +21,7 @@ import java.util.Random;
 
 public class Spawner {
 
-        public String name;
+    public String name;
         public Location location;
         public int maxMobs;
         public int spawnRate;
@@ -27,21 +29,22 @@ public class Spawner {
         public int sizeX;
         public int sizeZ;
         public int mobsInt;
+        public int variant;
 
 
         //Mob ??
-        public Spawner(String name1, Location location1, int maxMobs1, int spawnRate1, int mobsPerSpawn1, int sizeX1, int sizeZ1) {
+        public Spawner(String name, Location location, int maxMobs, int spawnRate,
+                       int mobsPerSpawn, int sizeX, int sizeZ, int variant) {
 
-            name = name1;
-            location = location1;
-            maxMobs = maxMobs1;
-            spawnRate = spawnRate1;
-            mobsPerSpawn = mobsPerSpawn1;
-            sizeX = sizeX1;
-            sizeZ = sizeZ1;
-            mobsInt = 0;
-
-
+            this.name = name;
+            this.location = location;
+            this.maxMobs = maxMobs;
+            this.spawnRate = spawnRate;
+            this.mobsPerSpawn = mobsPerSpawn;
+            this.sizeX = sizeX;
+            this.sizeZ = sizeZ;
+            this.mobsInt = 0;
+            this.variant = variant;
         }
 
         public String getName() {
@@ -74,35 +77,39 @@ public class Spawner {
 
         public int getMobsInt() {return mobsInt;}
 
-        public void setName(String name1) {
-            name = name1;
+        public int getVar() {return variant;}
+
+        public void setName(String name) {
+            this.name = name;
         }
 
-        public void setLocation(Location location1) {
-            location = location1;
+        public void setLocation(Location location) {
+            this.location = location;
         }
 
-        public void setMaxMobs(int maxMobs1) {
-            maxMobs = maxMobs1;
+        public void setMaxMobs(int maxMobs) {
+            this.maxMobs = maxMobs;
         }
 
-        public void setSpawnRate(int spawnRate1) {
-            spawnRate = spawnRate1;
+        public void setSpawnRate(int spawnRate) {
+            this.spawnRate = spawnRate;
         }
 
-        public void setMobsPerSpawn(int mobsPerSpawn1) {
-            mobsPerSpawn = mobsPerSpawn1;
+        public void setMobsPerSpawn(int mobsPerSpawn) {
+            this.mobsPerSpawn = mobsPerSpawn;
         }
 
-        public void setSizeX(int sizeX1) {
-            sizeX = sizeX1;
+        public void setSizeX(int sizeX) {
+            this.sizeX = sizeX;
         }
 
-        public void setSizeZ(int sizeZ1) {
-            sizeZ = sizeZ1;
+        public void setSizeZ(int sizeZ) {
+            this.sizeZ = sizeZ;
         }
 
-        public void setMobsInt(int mobsInt1) {mobsInt = mobsInt1;}
+        public void setMobsInt(int mobsInt) {this.mobsInt = mobsInt;}
+
+        public void setVar(int variant) {this.variant = variant;}
 
         public void mobsIntIncr() {
             mobsInt = mobsInt + 1;
@@ -113,6 +120,7 @@ public class Spawner {
         }
 
         public boolean maxMobsReached() {
+            
             if (mobsInt >= maxMobs) {
                 return true;
             }
@@ -122,8 +130,8 @@ public class Spawner {
 
 
 
-        public void createSpawnerConfig() {
-            File parent = new File(Dungeon.spawnerFolder, "banditspawner");
+        public void createSpawnerConfig(String type) {
+            File parent = new File(Dungeon.spawnerFolder, type);
             File file = new File(parent, name + ".yml");
 
             FileConfiguration spawnerConfig = YamlConfiguration.loadConfiguration(file);
@@ -135,7 +143,7 @@ public class Spawner {
             spawnerConfig.set("mobsperspawn", mobsPerSpawn);
             spawnerConfig.set("sizeX", sizeX);
             spawnerConfig.set("sizeZ", sizeZ);
-            Bukkit.broadcastMessage("test1233");
+            spawnerConfig.set("variant", variant);
             try {
                 spawnerConfig.save(file);
             } catch (IOException e) {
@@ -143,8 +151,21 @@ public class Spawner {
                 e.printStackTrace();
             }
 
-            Bukkit.broadcastMessage("Test1344");
+
         }
+
+
+    public boolean onGround(Location location) {
+        Location location1 = new Location(location.getWorld(), location.getX(), location.getY() - 1, location.getZ());
+        if (location1.getBlock().getType() != Material.AIR) {
+            if (location1.add(0, 1, 0).getBlock().getType() == Material.AIR) {
+                return true;
+            }
+        } else if (location.getY() < 2) {
+            return true;
+        }
+        return false;
+    }
 
 
 

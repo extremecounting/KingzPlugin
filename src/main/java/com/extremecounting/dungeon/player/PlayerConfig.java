@@ -33,6 +33,9 @@ public class PlayerConfig {
             playerData.set("basic.kills", 0);
             playerData.set("basic.joins", 0);
             playerData.set("basic.rank", 0);
+            playerData.set("basic.damage", 0.0);
+            playerData.set("basic.damaged", 0.0);
+            playerData.set("basic.karma", 0);
 
             playerData.set("island.created", false);
             playerData.set("island.playerLocation", "0");

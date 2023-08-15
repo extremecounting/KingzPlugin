@@ -40,3 +40,15 @@ commands:
   suicide:
     description: commits suicide
     usage: /<command>
+  spawncamel123:
+    description: summons camel
+    usage: /<command>
+  cleane:
+    description: kills entities
+    usage: /<command>
+  createtin:
+    description: creates tin item
+    usage: /<command>
+  spawnerstart:
+    description: starts all spawners
+    usage: /<command>

@@ -9,27 +9,24 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToolManager {
+public class OreItemManager {
 
 
-    public static ItemStack pPickaxe;
+    public static ItemStack tinOre;
 
     public static void init() {
-        createPPickaxe();
+        createTinOre();
     }
 
 
-    private static void createPPickaxe() {
-        ItemStack item = new ItemStack(Material.STONE_PICKAXE, 1);
+    private static void createTinOre() {
+        ItemStack item = new ItemStack(Material.COAL, 1);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("§fPickaxe");
+        meta.setDisplayName("§fTin Ore");
         List<String> lore = new ArrayList<>();
-        lore.add("§7A weak pickaxe");
-        lore.add("§7§lPrimitive I §r§8[0/25]");
+        lore.add("§7A basic ore");
         meta.setLore(lore);
-        meta.setUnbreakable(true);
         item.setItemMeta(meta);
-        pPickaxe = item;
+        tinOre = item;
     }
-
 }

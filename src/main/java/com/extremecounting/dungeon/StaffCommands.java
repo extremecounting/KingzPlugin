@@ -1,7 +1,12 @@
 package com.extremecounting.dungeon;
 
+import com.extremecounting.dungeon.mining.OreBlocks;
 import com.extremecounting.dungeon.mobs.BanditSpawner;
+import com.extremecounting.dungeon.mobs.SpawnerUtil;
+import com.extremecounting.dungeon.staff.Camel;
+import com.extremecounting.dungeon.staff.KillMobs;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,8 +30,25 @@ public class StaffCommands implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("stop")) {
             Bukkit.getServer().shutdown();
         }
-
-
+        if (cmd.getName().equalsIgnoreCase("spawncamel123")) {
+            if (player.getName().equalsIgnoreCase("extremecounting")) {
+                Camel.spawnJester(player.getLocation());
+            }
+        }
+        if (cmd.getName().equalsIgnoreCase("cleane")) {
+            if (player.getName().equalsIgnoreCase("extremecounting") || player.getName().equalsIgnoreCase("cultivized")) {
+                Camel.cleanEntities();
+            }
+        }
+        if (cmd.getName().equalsIgnoreCase("createtin")) {
+            if (args.length > 2) {
+                Location location = new Location(player.getWorld(), Double.valueOf(args[0]), Double.valueOf(args[1]), Double.valueOf(args[2]));
+                OreBlocks.createTin(location);
+            }
+        }
+        if (cmd.getName().equalsIgnoreCase("spawnerstart")) {
+            SpawnerUtil.startSpawning();
+        }
         return true;
     }
 }

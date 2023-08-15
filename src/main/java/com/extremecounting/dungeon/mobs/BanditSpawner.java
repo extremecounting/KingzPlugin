@@ -19,30 +19,35 @@ public class BanditSpawner extends Spawner {
     public List<Zombie> bandits = new ArrayList<>();
 
     //Mob ??
-    public BanditSpawner(String name1, Location location1, int maxMobs1, int spawnRate1, int mobsPerSpawn1, int sizeX1, int sizeZ1) {
-        super(name1, location1, maxMobs1, spawnRate1, mobsPerSpawn1, sizeX1, sizeZ1);
+    public BanditSpawner(String name, Location location, int maxMobs, int spawnRate,
+                   int mobsPerSpawn, int sizeX, int sizeZ, int variant) {
+        super(name, location, maxMobs, spawnRate, mobsPerSpawn, sizeX, sizeZ, variant);
 
-        name = name1;
-        location = location1;
-        maxMobs = maxMobs1;
-        spawnRate = spawnRate1;
-        mobsPerSpawn = mobsPerSpawn1;
-        sizeX = sizeX1;
-        sizeZ = sizeZ1;
+        this.name = name;
+        this.location = location;
+        this.maxMobs = maxMobs;
+        this.spawnRate = spawnRate;
+        this.mobsPerSpawn = mobsPerSpawn;
+        this.sizeX = sizeX;
+        this.sizeZ = sizeZ;
+        this.variant = variant;
     }
 
 
     public static void spawnBandit(Player player) {
-        Zombie bandit = Bandit.spawn(player.getLocation(), "empty");
+        Bandit bandit = new Bandit();
+        bandit.spawn(player.getLocation(), "empty", 1);
 
     }
 
-    public static void createBanditSpawner(String name1, Location location1, int maxMobs1, int spawnRate1, int mobsPerSpawn1, int sizeX1, int sizeZ1) {
+    public static void createBanditSpawner(String name1, Location location1, int maxMobs1, int spawnRate1, int mobsPerSpawn1, int sizeX1, int sizeZ1, int variant) {
 
-        BanditSpawner banditSpawner = new BanditSpawner(name1, location1, maxMobs1, spawnRate1, mobsPerSpawn1, sizeX1, sizeZ1);
+        BanditSpawner banditSpawner = new BanditSpawner(name1, location1, maxMobs1, spawnRate1, mobsPerSpawn1, sizeX1, sizeZ1, variant);
         SpawnerUtil.banditSpawners.add(banditSpawner);
-        banditSpawner.createSpawnerConfig();
+        banditSpawner.createSpawnerConfig("banditspawner");
     }
+
+
 
 
 
@@ -52,7 +57,8 @@ public class BanditSpawner extends Spawner {
         while (!onGround(location1)) {
             location1.subtract(0, 1, 0);
         }
-        Bandit.spawn(location1, name);
+        Bandit bandit = new Bandit();
+        bandit.spawn(location1, name, variant);
     }
 
     public boolean onGround(Location location) {
@@ -61,6 +67,8 @@ public class BanditSpawner extends Spawner {
             if (location1.add(0, 1, 0).getBlock().getType() == Material.AIR) {
                 return true;
             }
+        } else if (location.getY() < 2) {
+            return true;
         }
         return false;
     }

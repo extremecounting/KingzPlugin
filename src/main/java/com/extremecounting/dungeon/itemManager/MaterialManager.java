@@ -14,6 +14,7 @@ public class MaterialManager {
     public static ItemStack sand;
     public static ItemStack shell;
     public static ItemStack bone;
+    public static ItemStack clothFiber;
 
     public static void init() {
         createPebble();
@@ -24,6 +25,7 @@ public class MaterialManager {
         createSand();
         createShell();
         createBone();
+        createClothFiber();
     }
 
     private static void createDriftWood() {
@@ -88,5 +90,13 @@ public class MaterialManager {
         meta.setDisplayName("§fBone");
         item.setItemMeta(meta);
         bone = item;
+    }
+
+    private static void createClothFiber() {
+        ItemStack item = new ItemStack(Material.STRING, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§fCloth Fiber");
+        item.setItemMeta(meta);
+        clothFiber = item;
     }
 }
