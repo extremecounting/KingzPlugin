@@ -2,6 +2,7 @@ package com.extremecounting.dungeon.npcs;
 
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -10,14 +11,14 @@ public class Quest {
     //Name of quest
     public String name;
     //Each quest message
-    public String quest;
+    public List<String> quest;
     //response
     public String response;
     //reward
     public Set<ItemStack> reward;
 
 
-    public Quest(String name, String quest, String response, Set<ItemStack> reward) {
+    public Quest(String name, List<String> quest, String response, Set<ItemStack> reward) {
         this.name = name;
         this.quest = quest;
         this.response = response;
@@ -27,7 +28,7 @@ public class Quest {
     public String getName() {
         return name;
     }
-    public String getQuest() {
+    public List<String> getQuest() {
         return quest;
     }
 
@@ -43,8 +44,12 @@ public class Quest {
         this.name = name;
     }
 
-    public void setQuest(String quest) {
+    public void setQuest(List<String> quest) {
         this.quest = quest;
+    }
+
+    public void addQuest(String quest) {
+        this.quest.add(quest);
     }
 
     public void setResponse(String response) {

@@ -9,23 +9,36 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Farmer implements Listener {
 
 
     public static void spawnFarmer(Location location) {
         Villager villager = location.getWorld().spawn(location, Villager.class);
         NPCUtil.setupNPC(villager, "Farmer Joe");
-        villager.addScoreboardTag("Farmer")
+        villager.addScoreboardTag("Farmer");
     }
 
     @EventHandler
     public void onClickFarmer(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
-        if (event.getRightClicked().getType() == EntityType.VILLAGER) {
-            if (event.getRightClicked().getScoreboardTags().contains("Farmer")) {
-
-            }
+        if (!(event.getRightClicked().getType() == EntityType.VILLAGER)) {
+            return;
         }
+        if (!event.getRightClicked().getScoreboardTags().contains("Farmer")) {
+            return;
+        }
+        if (player.isSneaking()) {
+            FarmerGUI farmerGUI = new FarmerGUI();
+            player.openInventory(farmerGUI.inv);
+            return;
+        }
+        List<String> questLineIntro = new ArrayList<>();
+        questLineIntro.add("§2Hello there player, I need your help!");
+        QuestLine questLine = new QuestLine("farmer", questLineIntro);
+        //Quest quest = new Quest("getleather", "Bring me 50 leather ")
     }
 
 }
