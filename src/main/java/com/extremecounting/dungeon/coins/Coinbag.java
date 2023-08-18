@@ -1,10 +1,14 @@
 package com.extremecounting.dungeon.coins;
 
 import com.extremecounting.dungeon.itemManager.CoinBagManager;
+import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Coinbag {
@@ -28,14 +32,21 @@ public class Coinbag {
         tier = 1;
     }
 
-    //line.substring(line.indexOf('»') + 1, line.indexOf('«')
-
 
     public Coinbag(Player player) {
+        //player.sendMessage("starting creating coinbag...");
+        if (findCoinBag(player) == null) {
+            //player.sendMessage("couldn't find it");
+            return;
+        }
+        //player.sendMessage("coinbag wasn't null");
         ItemStack coinBag = findCoinBag(player);
+        //player.sendMessage("item saved");
         this.coinBag = coinBag;
         this.bagOwner = player;
+        //player.sendMessage("variables saved");
         coinBagSetup(coinBag);
+        //player.sendMessage("bag setup " + getTinCoins());
     }
 
     private void coinBagSetup(ItemStack coinBag) {
@@ -53,19 +64,51 @@ public class Coinbag {
     }
 
     public ItemStack findCoinBag(Player player) {
-        Inventory inv = player.getInventory();
-        for (ItemStack itemStack : inv) {
-            if (itemStack.getItemMeta().getDisplayName().equalsIgnoreCase(
-                    CoinBagManager.coinBag.getItemMeta().getDisplayName())) {
+        for (ItemStack itemStack : player.getInventory().getContents()) {
+            if (itemStack == null) {
+                continue;
+            }
+            if (itemStack.isSimilar(CoinBagManager.coinBag)) {
+                Bukkit.broadcastMessage("this coinbag was found");
                 return itemStack;
             }
         }
         return null;
     }
 
+    private int findCoinBagLocation() {
+        ItemStack[] inv = bagOwner.getInventory().getContents();
+        for (int i = 0; i < inv.length + 1; i++) {
+            if (inv[i] == null) {
+                continue;
+            }
+            if (inv[i].isSimilar(CoinBagManager.coinBag)) {
+                return i;
+
+            }
+        }
+        return 0;
+    }
+
     public void reload() {
-        ItemStack coinBag = findCoinBag(bagOwner);
-        coinBagSetup(coinBag);
+        bagOwner.sendMessage(String.valueOf(getTinCoins()));
+        Bukkit.broadcastMessage(String.valueOf(getTinCoins()));
+        List<String> lore = new ArrayList<>();
+
+        lore.add(ChatColor.of("#858585") + "Tier §l§f»" + getTier() + "§l§f«");
+        lore.add(ChatColor.of("#e6e6e6") + "Tin Coins §l§f»" + getTinCoins() + "§l§f«");
+        lore.add(ChatColor.of("#b85233") + "Copper Coins §l§f»" + getCopperCoins() + "§l§f«");
+        lore.add(ChatColor.of("#c0c0c0") + "Silver Coins §l§f»" + getSilverCoins() + "§l§f«");
+        lore.add(ChatColor.of("#fcc200") + "Gold Coins §l§f»" + getGoldCoins() + "§l§f«");
+
+        ItemMeta meta = coinBag.getItemMeta();
+        meta.setLore(lore);
+        coinBag.setItemMeta(meta);
+
+        int location = findCoinBagLocation();
+
+        bagOwner.getInventory().setItem(location, coinBag);
+
     }
 
     public ItemStack getCoinBag() {
@@ -109,7 +152,7 @@ public class Coinbag {
     }
 
     public void addTinCoins(int tinCoins) {
-        this.tinCoins += tinCoins;
+        this.tinCoins = this.tinCoins + tinCoins;
     }
 
     public void addCopperCoins(int copperCoins) {

@@ -95,6 +95,7 @@ public final class Dungeon extends JavaPlugin {
         getCommand("createtin").setExecutor(staffCommands);
         getCommand("spawnerstart").setExecutor(staffCommands);
         getCommand("spawnfarmer").setExecutor(staffCommands);
+        getCommand("givecoinbag").setExecutor(staffCommands);
 
         SpawnerCommands spawnerCommands = new SpawnerCommands();
         getCommand("spawnertest").setExecutor(spawnerCommands);
