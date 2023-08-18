@@ -9,6 +9,8 @@ import com.extremecounting.dungeon.island.IslandCommands;
 import com.extremecounting.dungeon.island.IslandUtility;
 import com.extremecounting.dungeon.itemManager.*;
 import com.extremecounting.dungeon.mobs.*;
+import com.extremecounting.dungeon.npcs.TobiasF;
+import com.extremecounting.dungeon.player.DropItem;
 import com.extremecounting.dungeon.rpg.Kills;
 import com.extremecounting.dungeon.skills.Damage;
 import com.extremecounting.dungeon.staff.Camel;
@@ -69,6 +71,8 @@ public final class Dungeon extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new Death(), this);
         Bukkit.getPluginManager().registerEvents(new KillMobs(), this);
         Bukkit.getPluginManager().registerEvents(new Damage(), this);
+        Bukkit.getPluginManager().registerEvents(new TobiasF(), this);
+        Bukkit.getPluginManager().registerEvents(new DropItem(), this);
 
         mainNameSpacedKey = new NamespacedKey(this, "Dungeon");
 
@@ -90,6 +94,7 @@ public final class Dungeon extends JavaPlugin {
         getCommand("cleane").setExecutor(staffCommands);
         getCommand("createtin").setExecutor(staffCommands);
         getCommand("spawnerstart").setExecutor(staffCommands);
+        getCommand("spawnfarmer").setExecutor(staffCommands);
 
         SpawnerCommands spawnerCommands = new SpawnerCommands();
         getCommand("spawnertest").setExecutor(spawnerCommands);
@@ -101,6 +106,7 @@ public final class Dungeon extends JavaPlugin {
         ToolManager.init();
         UpgradeManager.init();
         OreItemManager.init();
+        CoinBagManager.init();
 
         SharpenerRecipes.init();
         SpearRecipes.init();

@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class QuestLine {
@@ -16,7 +17,7 @@ public class QuestLine {
     //Name of entire quest line (usually name of NPC)
     public String name;
     //List of all quests
-    public List<Quest> quests;
+    public List<Quest> quests = new ArrayList<>();
 
     //Creates questline without the quests
 
@@ -64,6 +65,29 @@ public class QuestLine {
         this.quests.add(quest);
     }
 
+    public boolean hasStartedQuestline(Player player) {
+        File file = PlayerConfig.getPlayerFile(Dungeon.usersFolder, player);
+        YamlConfiguration configFile = YamlConfiguration.loadConfiguration(file);
+        if (configFile.get(name) == null) {
+            return false;
+        }
+        return true;
+    }
+
+    public void startQuestline(Player player) {
+        File file = PlayerConfig.getPlayerFile(Dungeon.usersFolder, player);
+        YamlConfiguration configFile = YamlConfiguration.loadConfiguration(file);
+        configFile.set(name, true);
+        try {
+            configFile.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (String line : introduction) {
+            player.sendMessage(line);
+        }
+    }
+
     public Quest getQuest(int i) {
         return quests.get(i);
     }
@@ -72,6 +96,7 @@ public class QuestLine {
         File file = PlayerConfig.getPlayerFile(Dungeon.usersFolder, player);
         YamlConfiguration configFile = YamlConfiguration.loadConfiguration(file);
         if (configFile.get(name) == null) {
+            setupPlayerQuest(player);
             return getQuest(0);
         }
         return getQuest(configFile.getInt(name));
@@ -98,6 +123,7 @@ public class QuestLine {
             e.printStackTrace();
         }
     }
+
 
 
 

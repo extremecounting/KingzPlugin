@@ -27,7 +27,7 @@ public class Damage implements Listener {
             File file = PlayerConfig.getPlayerFile(Dungeon.usersFolder, player);
 
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-            config.set("basic.damage", Double.valueOf((String) config.get("basic.damage")) + damage);
+            config.set("basic.damage", config.getDouble(("basic.damage")) + damage);
             try {
                 config.save(file);
             } catch (IOException e) {

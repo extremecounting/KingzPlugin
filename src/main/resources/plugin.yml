@@ -52,3 +52,6 @@ commands:
   spawnerstart:
     description: starts all spawners
     usage: /<command>
+  spawnfarmer:
+    description: spawns a farmer npc
+    usage: /<command>

@@ -1,10 +1,9 @@
 package com.extremecounting.dungeon;
 
 import com.extremecounting.dungeon.mining.OreBlocks;
-import com.extremecounting.dungeon.mobs.BanditSpawner;
 import com.extremecounting.dungeon.mobs.SpawnerUtil;
+import com.extremecounting.dungeon.npcs.TobiasF;
 import com.extremecounting.dungeon.staff.Camel;
-import com.extremecounting.dungeon.staff.KillMobs;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -48,6 +47,9 @@ public class StaffCommands implements CommandExecutor {
         }
         if (cmd.getName().equalsIgnoreCase("spawnerstart")) {
             SpawnerUtil.startSpawning();
+        }
+        if (cmd.getName().equalsIgnoreCase("spawnfarmer")) {
+            TobiasF.spawnFarmer(player.getLocation());
         }
         return true;
     }
