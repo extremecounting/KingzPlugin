@@ -58,3 +58,12 @@ commands:
   givecoinbag:
     description: gives the player a coin bag
     usage: /<command>
+  tpa:
+    description: Request teleportation to another user
+    usage: /<command> <arg>
+  tpaccept:
+    description: Accept teleportation request
+    usage: /<command> <arg>
+  tpdeny:
+    description: Deny teleportation request
+    usage: /<command> <arg>
