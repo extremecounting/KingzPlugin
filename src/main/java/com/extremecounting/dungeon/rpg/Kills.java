@@ -18,27 +18,11 @@ import java.util.Set;
 public class Kills implements Listener {
 
     @EventHandler
-    public static void onKill(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player)) {
-            event.setCancelled(true);
-            event.getEntity().remove();
-            return;
-        }
-        Player player = (Player) event.getDamager();
+    public static void onKill(EntityDeathEvent event) {
+        Player player = event.getEntity().getKiller();
 
         if (event.getEntity() instanceof Zombie) {
             Zombie zombie = (Zombie) event.getEntity();
-            /*
-            if (zombie.getHealth() > 0) {
-                Bukkit.broadcastMessage("not dead");
-                return;
-            }
-            Set<String> scoreboards = event.getEntity().getScoreboardTags();
-            for (String string : scoreboards) {
-                Bukkit.broadcastMessage(string);
-            }
-
-             */
             if (event.getEntity().getScoreboardTags().contains("bandit1")) {
                 Coinbag coinbag = new Coinbag(player);
                 if (coinbag.coinBag != null) {
@@ -47,7 +31,7 @@ public class Kills implements Listener {
             }
         }
 
-        /*
+
         FileConfiguration playerData = IslandUtility.getIslandConfig(Dungeon.usersFolder, player);
         playerData.set("basic.kills", ((int) playerData.get("basic.kills")) + 1);
         try {
@@ -56,7 +40,6 @@ public class Kills implements Listener {
             e.printStackTrace();
         }
 
-         */
 
 
     }

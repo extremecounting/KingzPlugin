@@ -93,7 +93,7 @@ public class Commands implements CommandExecutor {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        accepter.teleport(targetPlayer.getLocation());
+                        targetPlayer.teleport(accepter.getLocation());
                         accepter.sendMessage(ChatColor.GREEN + "You have been teleported to " + ChatColor.YELLOW + targetPlayer.getName() + ChatColor.GREEN + "!");
                     }
                 }.runTaskLater(plugin, 100L);

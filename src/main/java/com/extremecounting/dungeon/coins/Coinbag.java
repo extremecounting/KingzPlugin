@@ -80,13 +80,12 @@ public class Coinbag {
 
     private int findCoinBagLocation() {
         ItemStack[] inv = bagOwner.getInventory().getContents();
-        for (int i = 0; i < inv.length + 1; i++) {
+        for (int i = 0; i < inv.length; i++) {
             if (inv[i] == null) {
                 continue;
             }
-            if (inv[i].isSimilar(CoinBagManager.coinBag)) {
+            if (inv[i].getItemMeta().getDisplayName().equalsIgnoreCase(CoinBagManager.coinBag.getItemMeta().getDisplayName())) {
                 return i;
-
             }
         }
         return 0;

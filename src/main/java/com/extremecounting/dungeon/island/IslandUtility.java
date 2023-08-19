@@ -100,7 +100,7 @@ public class IslandUtility {
         }
         List<UUID> playerFileNames = new ArrayList<>();
         for (File file : islandFiles) {
-            playerFileNames.add(UUID.fromString(file.getName()));
+            playerFileNames.add(UUID.fromString(file.getName().substring(0, file.getName().length() - 4)));
         }
         if (!playerFileNames.contains(player.getUniqueId())) {
             return null;
