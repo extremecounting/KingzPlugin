@@ -2,6 +2,7 @@ package com.extremecounting.dungeon.mobs;
 
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,6 +15,6 @@ public interface RPGMob<T extends LivingEntity> {
 
     T createMob(T mob, String tag, int variant);
 
-    List<ItemStack> dropTable(float percent);
+    List<ItemStack> dropTable(Player player, float percent);
 
 }
