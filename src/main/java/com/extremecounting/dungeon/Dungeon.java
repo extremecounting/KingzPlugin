@@ -58,6 +58,8 @@ public final class Dungeon extends JavaPlugin {
             e.printStackTrace();
         }
 
+
+        Commands.plugin = this;
         SpawnerUtil.pluginInstance = this;
 
         SpawnerUtil.getBanditSpawners("banditspawner");

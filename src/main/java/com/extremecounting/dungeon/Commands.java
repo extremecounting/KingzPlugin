@@ -3,6 +3,9 @@ package com.extremecounting.dungeon;
 import com.extremecounting.dungeon.itemManager.MaterialManager;
 import com.extremecounting.dungeon.itemManager.WeaponManager;
 import com.extremecounting.dungeon.mobs.BanditSpawner;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.command.Command;
@@ -10,8 +13,16 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
 
 public class Commands implements CommandExecutor {
+
+    public static Plugin plugin;
+
+    private HashMap<Player, Player> teleportRequests = new HashMap<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
