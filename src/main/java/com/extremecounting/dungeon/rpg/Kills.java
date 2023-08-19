@@ -42,9 +42,7 @@ public class Kills implements Listener {
             if (event.getEntity().getScoreboardTags().contains("bandit1")) {
                 Coinbag coinbag = new Coinbag(player);
                 if (coinbag.coinBag != null) {
-                    player.sendMessage("test123");
                     coinbag.addTinCoins(5);
-                    coinbag.reload();
                 }
             }
         }

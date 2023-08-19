@@ -34,33 +34,35 @@ public class Coinbag {
 
 
     public Coinbag(Player player) {
-        //player.sendMessage("starting creating coinbag...");
+        player.sendMessage("starting creating coinbag...");
         if (findCoinBag(player) == null) {
             //player.sendMessage("couldn't find it");
             return;
         }
-        //player.sendMessage("coinbag wasn't null");
+        player.sendMessage("coinbag wasn't null");
         ItemStack coinBag = findCoinBag(player);
-        //player.sendMessage("item saved");
+        player.sendMessage("item saved");
         this.coinBag = coinBag;
         this.bagOwner = player;
-        //player.sendMessage("variables saved");
+        player.sendMessage("variables saved");
         coinBagSetup(coinBag);
-        //player.sendMessage("bag setup " + getTinCoins());
+        player.sendMessage("bag setup " + getTinCoins());
     }
 
     private void coinBagSetup(ItemStack coinBag) {
         List<String> lore = coinBag.getItemMeta().getLore();
+        assert lore != null;
         String line = lore.get(0);
-        tier = Byte.parseByte(line.substring(line.indexOf('»') + 1, line.indexOf('«')));
+        Bukkit.broadcastMessage(line.substring(line.indexOf('»') + 1, line.indexOf('«')));
+        tier = Byte.parseByte(ChatColor.stripColor(line.substring(line.indexOf('»') + 1, line.indexOf('«'))));
         line = lore.get(1);
-        tinCoins = Integer.parseInt(line.substring(line.indexOf('»') + 1, line.indexOf('«')));
+        tinCoins = Integer.parseInt(ChatColor.stripColor(line.substring(line.indexOf('»') + 1, line.indexOf('«'))));
         line = lore.get(2);
-        copperCoins = Integer.parseInt(line.substring(line.indexOf('»') + 1, line.indexOf('«')));
+        copperCoins = Integer.parseInt(ChatColor.stripColor(line.substring(line.indexOf('»') + 1, line.indexOf('«'))));
         line = lore.get(3);
-        silverCoins = Integer.parseInt(line.substring(line.indexOf('»') + 1, line.indexOf('«')));
+        silverCoins = Integer.parseInt(ChatColor.stripColor(line.substring(line.indexOf('»') + 1, line.indexOf('«'))));
         line = lore.get(4);
-        goldCoins = Integer.parseInt(line.substring(line.indexOf('»') + 1, line.indexOf('«')));
+        goldCoins = Integer.parseInt(ChatColor.stripColor(line.substring(line.indexOf('»') + 1, line.indexOf('«'))));
     }
 
     public ItemStack findCoinBag(Player player) {
@@ -68,7 +70,7 @@ public class Coinbag {
             if (itemStack == null) {
                 continue;
             }
-            if (itemStack.isSimilar(CoinBagManager.coinBag)) {
+            if (itemStack.getItemMeta().getDisplayName().equalsIgnoreCase(CoinBagManager.coinBag.getItemMeta().getDisplayName())) {
                 Bukkit.broadcastMessage("this coinbag was found");
                 return itemStack;
             }
@@ -153,18 +155,22 @@ public class Coinbag {
 
     public void addTinCoins(int tinCoins) {
         this.tinCoins = this.tinCoins + tinCoins;
+        reload();
     }
 
     public void addCopperCoins(int copperCoins) {
         this.copperCoins += copperCoins;
+        reload();
     }
 
     public void addSilverCoins(int silverCoins) {
         this.silverCoins += silverCoins;
+        reload();
     }
 
     public void addGoldCoins(int goldCoins) {
         this.goldCoins += goldCoins;
+        reload();
     }
 
 }

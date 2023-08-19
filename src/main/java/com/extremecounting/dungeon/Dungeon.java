@@ -84,7 +84,7 @@ public final class Dungeon extends JavaPlugin {
         getCommand("spear").setExecutor(commands);
         getCommand("givestuff").setExecutor(commands);
         getCommand("test1").setExecutor(commands);
-
+        
         IslandCommands islandCommands = new IslandCommands();
         getCommand("island").setExecutor(islandCommands);
 

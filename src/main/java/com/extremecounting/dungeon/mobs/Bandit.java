@@ -1,10 +1,12 @@
 package com.extremecounting.dungeon.mobs;
 
+import com.extremecounting.dungeon.coins.Coinbag;
 import com.extremecounting.dungeon.itemManager.MaterialManager;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -63,24 +65,40 @@ public class Bandit implements RPGMob<Zombie> {
         return zombie;
     }
 
-    @Override
-    public List<ItemStack> dropTable(float percent) {
+    public List<ItemStack> dropTable(Player player, float percent) {
         List<ItemStack> items = new ArrayList<>();
         Random random = new Random();
         int chance = random.nextInt(0, 100);
         ItemStack itemStack = MaterialManager.clothFiber;
-        if (chance <= 30) {
+        percent += 1;
+        if (chance * percent <= 30) {
             itemStack.setAmount(1);
-        } else if (chance <= 55) {
+        } else if (chance * percent <= 55) {
             itemStack.setAmount(2);
-        } else if (chance <= 90) {
+        } else if (chance * percent <= 90) {
             itemStack.setAmount(3);
         } else {
             itemStack.setAmount(4);
         }
         items.add(itemStack);
 
-
+        chance = random.nextInt(0, 100);
+        Coinbag coinbag = new Coinbag(player);
+        if (chance * percent <= 10) {
+            coinbag.addTinCoins(1);
+        } else if (chance * percent <= 25) {
+            coinbag.addTinCoins(2);
+        } else if (chance * percent <= 40) {
+            coinbag.addTinCoins(3);
+        } else if (chance * percent <= 60) {
+            coinbag.addTinCoins(4);
+        } else if (chance * percent <= 80) {
+            coinbag.addTinCoins(5);
+        } else if (chance * percent <= 95) {
+            coinbag.addTinCoins(6);
+        } else {
+            coinbag.addTinCoins(8);
+        }
         return items;
     }
 
