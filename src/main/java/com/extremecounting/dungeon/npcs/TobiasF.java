@@ -1,6 +1,8 @@
 package com.extremecounting.dungeon.npcs;
 
 
+import com.extremecounting.dungeon.itemManager.QuestItemManager;
+import com.extremecounting.dungeon.itemManager.WeaponManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -53,30 +55,31 @@ public class TobiasF implements Listener {
         Set<ItemStack> requiredItems = new HashSet<>();
         requiredItems.add(new ItemStack(Material.LEATHER, 50));
         questLine.addQuest(new Quest("getleather", request,
-                "§2Thank you so much, here is 5 dirt!", items, "§2I need §6§n50 Leather", requiredItems));
+                "§2Thank you so much, here is 60 tin coins!", items, "§2I need §6§n50 Leather", requiredItems, "Get 50 leather"));
 
         request = new ArrayList<>();
         items = new HashSet<>();
         requiredItems = new HashSet<>();
         request.add("§2My food stockpile was raided by bandits, and I lost all my food.");
-        request.add("§2Bring me §6§n150 Raw Pork§2 so my family can survive the winter.");
-        items.add(new ItemStack(Material.COAL_ORE, 2));
-        requiredItems.add(new ItemStack(Material.PORKCHOP, 150));
+        request.add("§2Bring me §6§n150 Raw Porkchops§2 so my family can survive the winter.");
+        items.add(WeaponManager.pHKnife);
+        Set<ItemStack> requiredItems1 = new HashSet<>();
+        requiredItems1.add(new ItemStack(Material.PORKCHOP, 50));
         questLine.addQuest(new Quest("getpork", request,
-                "§2Now we can survive the winter! Here is this coal.", items,
-                "Please get me §6§n150 Raw Pork.", requiredItems));
+                "§2Now we can survive the winter! Take this knife.", items,
+                "§2Please get me §6§n150 Raw Porkchops.", requiredItems1, "Get 150 Porkchops"));
 
         request = new ArrayList<>();
         items = new HashSet<>();
-        request.add("§2The bandits stole my watch!");
-        request.add("§2Can you steal the §6§nTin Watch§2 back for me?");
+        request.add("§2The bandits stole my walking stick!");
+        request.add("§2Can you steal the §6§nWalking Stick§2 back for me?");
         items.add(new ItemStack(Material.STICK, 1));
-        requiredItems.add(new ItemStack(Material.STONE, 1));
-        questLine.addQuest(new Quest("getwatch", request, "§2Thank you for the watch, here is a stick!", items,
-                "§2I need my §6§nTin Watch!", requiredItems));
-
+        requiredItems.add(QuestItemManager.walkingStick);
+        questLine.addQuest(new Quest("getwalkingstick", request, "§2Thank you for the walking stick, let me see the knife and I'll improve it!", items,
+                "§2I need my §6§nWalking Stick!", requiredItems, "Get Walking Stick"));
+        questLine.getQuest(2).addQuestItem("walkingstick");
         Quest quest = questLine.getPlayerQuest(player);
-        if (questLine.getQuests().indexOf(quest) == 0) {
+        if (!questLine.hasStartedQuestline(player)) {
             questLine.startQuestline(player);
         }
 
@@ -84,11 +87,11 @@ public class TobiasF implements Listener {
             quest.startQuest(player);
             return;
         }
-        if (!quest.hasRequiredItems(player)) {
+        if (!quest.hasRequirements(player)) {
             player.sendMessage(quest.awaitMsg);
             return;
         }
-        quest.itemTransaction(player);
+        quest.transaction(player);
         quest.endQuest(player);
         questLine.incrPlayerQuest(player);
     }

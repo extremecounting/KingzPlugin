@@ -55,6 +55,9 @@ commands:
   spawnfarmer:
     description: spawns a farmer npc
     usage: /<command>
+  spawnmayor:
+    description: spawner a mayor npc
+    usage: /<command>
   givecoinbag:
     description: gives the player a coin bag
     usage: /<command>

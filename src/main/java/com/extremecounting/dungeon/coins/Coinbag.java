@@ -15,7 +15,7 @@ public class Coinbag {
 
     public Player bagOwner;
 
-    public ItemStack coinBag;
+    public ItemStack coinBag = null;
 
     public byte tier;
 
@@ -24,29 +24,27 @@ public class Coinbag {
     public int silverCoins;
     public int goldCoins;
 
+    public int maxCoins;
+
     public Coinbag() {
         tinCoins = 0;
         copperCoins = 0;
         silverCoins = 0;
         goldCoins = 0;
         tier = 1;
+        maxCoins = 10 * (10^tier);
     }
 
-
     public Coinbag(Player player) {
-        player.sendMessage("starting creating coinbag...");
         if (findCoinBag(player) == null) {
-            //player.sendMessage("couldn't find it");
+            this.coinBag = null;
             return;
         }
-        player.sendMessage("coinbag wasn't null");
         ItemStack coinBag = findCoinBag(player);
-        player.sendMessage("item saved");
         this.coinBag = coinBag;
         this.bagOwner = player;
-        player.sendMessage("variables saved");
         coinBagSetup(coinBag);
-        player.sendMessage("bag setup " + getTinCoins());
+        maxCoins = 10 * (10^tier);
     }
 
     private void coinBagSetup(ItemStack coinBag) {
@@ -109,7 +107,6 @@ public class Coinbag {
         int location = findCoinBagLocation();
 
         bagOwner.getInventory().setItem(location, coinBag);
-
     }
 
     public ItemStack getCoinBag() {
@@ -153,23 +150,42 @@ public class Coinbag {
     }
 
     public void addTinCoins(int tinCoins) {
+        if (this.tinCoins + copperCoins + silverCoins + goldCoins + tinCoins >= maxCoins) {
+            this.tinCoins = maxCoins - (copperCoins + silverCoins + goldCoins);
+            reload();
+            return;
+        }
         this.tinCoins = this.tinCoins + tinCoins;
         reload();
     }
 
     public void addCopperCoins(int copperCoins) {
+        if (tinCoins + copperCoins + silverCoins + goldCoins + copperCoins >= maxCoins) {
+            this.copperCoins = maxCoins - (tinCoins + silverCoins + goldCoins);
+            reload();
+            return;
+        }
         this.copperCoins += copperCoins;
         reload();
     }
 
     public void addSilverCoins(int silverCoins) {
+        if (tinCoins + copperCoins + this.silverCoins + goldCoins >= maxCoins) {
+            this.silverCoins = maxCoins - (tinCoins + copperCoins + goldCoins);
+            reload();
+            return;
+        }
         this.silverCoins += silverCoins;
         reload();
     }
 
     public void addGoldCoins(int goldCoins) {
+        if (tinCoins + copperCoins + silverCoins + this.goldCoins >= maxCoins) {
+            this.goldCoins = maxCoins - (tinCoins + copperCoins + silverCoins);
+            reload();
+            return;
+        }
         this.goldCoins += goldCoins;
         reload();
     }
-
 }

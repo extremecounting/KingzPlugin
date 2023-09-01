@@ -104,5 +104,4 @@ public class IslandCommands implements CommandExecutor {
             e.printStackTrace();
         }
     }
-
 }

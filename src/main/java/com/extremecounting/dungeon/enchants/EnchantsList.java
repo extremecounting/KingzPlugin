@@ -29,8 +29,4 @@ public class EnchantsList {
         String input = enchant;
         map.put(name, input);
     }
-
-
-
-
 }

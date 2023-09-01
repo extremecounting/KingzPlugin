@@ -15,6 +15,7 @@ public interface RPGMob<T extends LivingEntity> {
 
     T createMob(T mob, String tag, int variant);
 
-    List<ItemStack> dropTable(Player player, float percent);
-
+    static List<ItemStack> dropTable(Player player, float percent) {
+        return null;
+    }
 }

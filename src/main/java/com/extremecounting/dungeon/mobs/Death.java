@@ -17,7 +17,5 @@ public class Death implements Listener {
                 }
             }
         }
-
-
     }
 }

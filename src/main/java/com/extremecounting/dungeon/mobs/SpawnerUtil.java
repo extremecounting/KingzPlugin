@@ -5,8 +5,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +23,7 @@ public class SpawnerUtil {
     final static int spawnDelayTicks = 80;
 
     public static List<BanditSpawner> banditSpawners = new ArrayList<>();
+    public static List<HogSpawner> hogSpawners = new ArrayList<>();
     public static boolean spawnerOn;
 
     public static void startSpawning() {
@@ -33,7 +37,12 @@ public class SpawnerUtil {
                         if (!banditSpawner.maxMobsReached()) {
                             banditSpawner.spawnBandit();
                             banditSpawner.mobsIntIncr();
-                            Bukkit.broadcastMessage("Total mobs " + banditSpawner.name + " : " + banditSpawner.mobsInt);
+                        }
+                    }
+                    for (HogSpawner hogSpawner : hogSpawners) {
+                        if (!hogSpawner.maxMobsReached()) {
+                            hogSpawner.spawnHog();
+                            hogSpawner.mobsIntIncr();
                         }
                     }
                 }
@@ -86,6 +95,11 @@ public class SpawnerUtil {
                 banditSpawners.add(banditSpawner);
             }
         }
-
     }
+
+    public static void shoot(Location location, EntityType entityType) {
+        Entity entity = location.getWorld().spawnEntity(location, entityType);
+        entity.setVelocity(new Vector(0, 1, 0));
+    }
+
 }

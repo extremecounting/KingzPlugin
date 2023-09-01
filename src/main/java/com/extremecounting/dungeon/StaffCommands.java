@@ -3,6 +3,7 @@ package com.extremecounting.dungeon;
 import com.extremecounting.dungeon.itemManager.CoinBagManager;
 import com.extremecounting.dungeon.mining.OreBlocks;
 import com.extremecounting.dungeon.mobs.SpawnerUtil;
+import com.extremecounting.dungeon.npcs.Mayor;
 import com.extremecounting.dungeon.npcs.TobiasF;
 import com.extremecounting.dungeon.staff.Camel;
 import org.bukkit.Bukkit;
@@ -51,6 +52,9 @@ public class StaffCommands implements CommandExecutor {
         }
         if (cmd.getName().equalsIgnoreCase("spawnfarmer")) {
             TobiasF.spawnFarmer(player.getLocation());
+        }
+        if (cmd.getName().equalsIgnoreCase("spawnmayor")) {
+            Mayor.spawnMayor(player.getLocation());
         }
         if (cmd.getName().equalsIgnoreCase("givecoinbag")) {
             player.getInventory().addItem(CoinBagManager.coinBag);

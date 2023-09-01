@@ -2,6 +2,8 @@ package com.extremecounting.dungeon.itemManager;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -18,6 +20,7 @@ public class WeaponManager {
     public static ItemStack pClub;
     public static ItemStack pHammer;
     public static ItemStack pDagger;
+    public static ItemStack pHKnife;
 
 
     public static void init() {
@@ -27,6 +30,7 @@ public class WeaponManager {
         createPClub();
         createPHammer();
         createPDagger();
+        createRustyKnife();
     }
 
     private static void createLightningRod() {
@@ -84,5 +88,13 @@ public class WeaponManager {
         pDagger = ItemUtility.primitiveTag(item);
     }
 
-
+    private static void createRustyKnife() {
+        ItemStack item = new ItemStack(Material.IRON_SWORD, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§fRusty Hunting Knife");
+        Attribute attribute = Attribute.GENERIC_ATTACK_DAMAGE;
+        meta.addAttributeModifier(attribute, new AttributeModifier("generic.attackDamage", 3, AttributeModifier.Operation.ADD_NUMBER));
+        item.setItemMeta(meta);
+        pHKnife = ItemUtility.primitiveTag(item);
+    }
 }

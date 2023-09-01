@@ -1,12 +1,14 @@
 package com.extremecounting.dungeon.npcs;
 
 import com.extremecounting.dungeon.Dungeon;
+import com.extremecounting.dungeon.mobs.RPGMob;
 import com.extremecounting.dungeon.player.PlayerConfig;
+import com.extremecounting.dungeon.player.ScoreboardUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.checkerframework.checker.index.qual.PolyUpperBound;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,28 +32,53 @@ public class Quest {
     public String awaitMsg;
     //item/s needed
     public Set<ItemStack> requiredItems = new HashSet<>();
+    //config for special item picked up from mob
+    public List<String> questItem = new ArrayList<>();
+    //thing in scoreboard
+    public String abbrievation;
+    //config for mobs that need to be killed
+    public String mob;
+    public int mobAmount;
 
-    public Quest(String name, List<String> quest, String response) {
+    public Quest(String name, List<String> quest, String response, String abbrievation) {
         this.name = name;
         this.quest = quest;
         this.response = response;
+        this.abbrievation = abbrievation;
     }
 
-    public Quest(String name, List<String> quest, String response, Set<ItemStack> reward) {
+    public Quest(String name, List<String> quest, String response, Set<ItemStack> reward, String abbrievation) {
         this.name = name;
         this.quest = quest;
         this.response = response;
         this.reward = reward;
+        this.abbrievation = abbrievation;
     }
 
 
-    public Quest(String name, List<String> quest, String response, Set<ItemStack> reward, String awaitMsg, Set<ItemStack> requiredItems) {
+    public Quest(String name, List<String> quest, String response, Set<ItemStack> reward, String awaitMsg, Set<ItemStack> requiredItems, String abbrievation) {
         this.name = name;
         this.quest = quest;
         this.response = response;
         this.reward = reward;
         this.awaitMsg = awaitMsg;
         this.requiredItems = requiredItems;
+        this.abbrievation = abbrievation;
+    }
+
+    public Quest(String name, List<String> quest, String response, Set<ItemStack> reward, String awaitMsg, String mob, int mobAmount, String abbrievation) {
+        this.name = name;
+        this.quest = quest;
+        this.response = response;
+        this.reward = reward;
+        this.awaitMsg = awaitMsg;
+        this.mob = mob;
+        this.mobAmount = mobAmount;
+        this.abbrievation = abbrievation;
+    }
+
+    public Quest() {
+
     }
 
     public String getName() {
@@ -76,6 +103,15 @@ public class Quest {
     public Set<ItemStack> getRequiredItems() {
         return requiredItems;
     }
+
+    public String getMob() {
+        return mob;
+    }
+
+    public int getMobAmount() {
+        return  mobAmount;
+    }
+
 
     public void setName(String name) {
         this.name = name;
@@ -109,50 +145,88 @@ public class Quest {
         this.requiredItems = requiredItems;
     }
 
+    public void setMob(String mob) {
+        this.mob = mob;
+    }
+
+    public void setMobAmount(int mobAmount) {
+        this.mobAmount = mobAmount;
+    }
+
     public void addRequiredItem(ItemStack item) {
         this.requiredItems.add(item);
     }
 
-    public void itemTransaction(Player player) {
-        if (hasRequiredItems(player)) {
+    public void addQuestItem(String questItem) {
+        this.questItem.add(questItem);
+    }
+
+    public void transaction(Player player) {
+        if (requiredItems != null) {
             for (ItemStack item : requiredItems) {
                 player.getInventory().removeItem(item);
             }
-            for (ItemStack item : reward) {
-                player.getInventory().addItem(item);
-            }
-            player.sendMessage(response);
         }
+        for (ItemStack item : reward) {
+            player.getInventory().addItem(item);
+        }
+        player.sendMessage(response);
     }
 
-    public boolean hasRequiredItems(Player player) {
+    public boolean hasRequirements(Player player) {
+        boolean output = hasRequiredItems(player);
+        if (mob != null) {
+            if (getPlayerConfig(player).getInt("questmob." + mob) > 0) {
+                int amount = getPlayerConfig(player).getInt("questmob." + mob);
+                player.sendMessage(Integer.toString(amount));
+                return false;
+            }
+            return true;
+        }
+        return output;
+    }
+
+    private boolean hasRequiredItems(Player player) {
+        if (requiredItems == null) {
+            return true;
+        }
         boolean skip = true;
         for (ItemStack item : requiredItems) {
             skip = false;
-            if (!player.getInventory().containsAtLeast(item, 1)) {
+            if (!player.getInventory().containsAtLeast(item, item.getAmount())) {
                 return false;
             }
         }
         return !skip;
     }
 
+
     public void startQuest(Player player) {
         File file = PlayerConfig.getPlayerFile(Dungeon.usersFolder, player);
-        YamlConfiguration configFile = YamlConfiguration.loadConfiguration(file);
+        YamlConfiguration configFile = getPlayerConfig(player);
         configFile.set(name, true);
+        for (String line : quest) {
+            player.sendMessage(line);
+        }
+        if (questItem != null) {
+            for (String item : questItem) {
+                configFile.set(name + "." + item, true);
+            }
+        }
+        if (mob != null) {
+            configFile.set("questmob." + mob, mobAmount);
+        }
+
         try {
             configFile.save(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (String line : quest) {
-            player.sendMessage(line);
-        }
+        ScoreboardUtil.questScoreboard(player, abbrievation, mobAmount);
     }
 
     public boolean hasStartedQuest(Player player) {
-        File file = PlayerConfig.getPlayerFile(Dungeon.usersFolder, player);
-        YamlConfiguration configFile = YamlConfiguration.loadConfiguration(file);
+        YamlConfiguration configFile = getPlayerConfig(player);
         if (configFile.get(name) == null) {
             return false;
         }
@@ -161,14 +235,19 @@ public class Quest {
 
     public void endQuest(Player player) {
         File file = PlayerConfig.getPlayerFile(Dungeon.usersFolder, player);
-        YamlConfiguration configFile = YamlConfiguration.loadConfiguration(file);
+        YamlConfiguration configFile = getPlayerConfig(player);
         configFile.set(name, null);
         try {
             configFile.save(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        ScoreboardUtil.removeQuestScoreboard(player, abbrievation);
     }
 
+    private YamlConfiguration getPlayerConfig(Player player) {
+        File file = PlayerConfig.getPlayerFile(Dungeon.usersFolder, player);
+        return YamlConfiguration.loadConfiguration(file);
+    }
 
 }

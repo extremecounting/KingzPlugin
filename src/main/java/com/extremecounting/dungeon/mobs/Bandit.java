@@ -1,5 +1,6 @@
 package com.extremecounting.dungeon.mobs;
 
+import com.comphenix.protocol.wrappers.WrappedGameProfile;
 import com.extremecounting.dungeon.coins.Coinbag;
 import com.extremecounting.dungeon.itemManager.MaterialManager;
 import me.libraryaddict.disguise.DisguiseAPI;
@@ -30,6 +31,7 @@ public class Bandit implements RPGMob<Zombie> {
         zombie.addScoreboardTag(tag);
         zombie.getEquipment().setBoots(new ItemStack(Material.LEATHER_BOOTS));
         zombie.getEquipment().setBootsDropChance(0f);
+
         if (variant == 1) {
             zombie.setHealth(5.0);
             zombie.damage(1.0);
@@ -61,11 +63,10 @@ public class Bandit implements RPGMob<Zombie> {
             zombie.getEquipment().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
             zombie.getEquipment().setChestplateDropChance(0f);
         }
-
         return zombie;
     }
 
-    public List<ItemStack> dropTable(Player player, float percent) {
+    public static List<ItemStack> dropTable(Player player, float percent) {
         List<ItemStack> items = new ArrayList<>();
         Random random = new Random();
         int chance = random.nextInt(0, 100);
@@ -84,6 +85,9 @@ public class Bandit implements RPGMob<Zombie> {
 
         chance = random.nextInt(0, 100);
         Coinbag coinbag = new Coinbag(player);
+        if (coinbag.coinBag == null) {
+            return items;
+        }
         if (chance * percent <= 10) {
             coinbag.addTinCoins(1);
         } else if (chance * percent <= 25) {
@@ -101,7 +105,6 @@ public class Bandit implements RPGMob<Zombie> {
         }
         return items;
     }
-
 }
 
 

@@ -16,6 +16,5 @@ public class InteractEvent implements Listener {
             Inventory inventory = new StartGUI().createStartGUI();
             event.getPlayer().openInventory(inventory);
         }
-
     }
 }

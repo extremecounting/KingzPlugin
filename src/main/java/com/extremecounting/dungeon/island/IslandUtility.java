@@ -112,5 +112,4 @@ public class IslandUtility {
         File file = getIslandFile(islandFolder, player);
         return YamlConfiguration.loadConfiguration(file);
     }
-
 }

@@ -75,9 +75,4 @@ public class OreBlocks implements Listener {
         block.setType(Material.IRON_ORE);
         return block;
     }
-
-
-
-
-
 }

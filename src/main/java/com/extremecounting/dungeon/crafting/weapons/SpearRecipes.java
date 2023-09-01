@@ -33,6 +33,5 @@ public class SpearRecipes {
         shapedRecipe.setIngredient('D', driftWoodChoice);
 
         pSpear = shapedRecipe;
-
     }
 }

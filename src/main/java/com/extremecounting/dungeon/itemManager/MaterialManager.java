@@ -15,6 +15,8 @@ public class MaterialManager {
     public static ItemStack shell;
     public static ItemStack bone;
     public static ItemStack clothFiber;
+    public static ItemStack rawPork;
+    public static ItemStack pigHide;
 
     public static void init() {
         createPebble();
@@ -26,6 +28,8 @@ public class MaterialManager {
         createShell();
         createBone();
         createClothFiber();
+        createPork();
+        createPigHide();
     }
 
     private static void createDriftWood() {
@@ -98,5 +102,21 @@ public class MaterialManager {
         meta.setDisplayName("§fCloth Fiber");
         item.setItemMeta(meta);
         clothFiber = item;
+    }
+
+    private static void createPork() {
+        ItemStack item = new ItemStack(Material.PORKCHOP, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§fRaw Porkchop");
+        item.setItemMeta(meta);
+        rawPork = item;
+    }
+
+    private static void createPigHide() {
+        ItemStack item = new ItemStack(Material.LEATHER, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§fRPig Hide");
+        item.setItemMeta(meta);
+        pigHide = item;
     }
 }

@@ -3,19 +3,20 @@ package com.extremecounting.dungeon;
 import com.extremecounting.dungeon.crafting.upgrades.SharpenerRecipes;
 import com.extremecounting.dungeon.crafting.weapons.SpearRecipes;
 import com.extremecounting.dungeon.events.BlockBreakDing;
+import com.extremecounting.dungeon.events.FarmlandDestroy;
 import com.extremecounting.dungeon.events.InteractEvent;
 import com.extremecounting.dungeon.events.PlayerJoin;
 import com.extremecounting.dungeon.island.IslandCommands;
 import com.extremecounting.dungeon.island.IslandUtility;
 import com.extremecounting.dungeon.itemManager.*;
 import com.extremecounting.dungeon.mobs.*;
+import com.extremecounting.dungeon.npcs.Mayor;
 import com.extremecounting.dungeon.npcs.TobiasF;
 import com.extremecounting.dungeon.player.DropItem;
 import com.extremecounting.dungeon.rpg.Kills;
 import com.extremecounting.dungeon.skills.Damage;
 import com.extremecounting.dungeon.staff.Camel;
 import com.extremecounting.dungeon.staff.KillMobs;
-import com.extremecounting.dungeon.weapons.LightningRod;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -66,15 +67,17 @@ public final class Dungeon extends JavaPlugin {
         SpawnerUtil.spawnerOn = true;
 
         Bukkit.getPluginManager().registerEvents(new BlockBreakDing(), this);
-        Bukkit.getPluginManager().registerEvents(new LightningRod(), this);
         Bukkit.getPluginManager().registerEvents(new InteractEvent(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
         Bukkit.getPluginManager().registerEvents(new Kills(), this);
         Bukkit.getPluginManager().registerEvents(new Death(), this);
         Bukkit.getPluginManager().registerEvents(new KillMobs(), this);
         Bukkit.getPluginManager().registerEvents(new Damage(), this);
-        Bukkit.getPluginManager().registerEvents(new TobiasF(), this);
         Bukkit.getPluginManager().registerEvents(new DropItem(), this);
+        Bukkit.getPluginManager().registerEvents(new FarmlandDestroy(), this);
+
+        Bukkit.getPluginManager().registerEvents(new TobiasF(), this);
+        Bukkit.getPluginManager().registerEvents(new Mayor(), this);
 
         mainNameSpacedKey = new NamespacedKey(this, "Dungeon");
 
@@ -101,6 +104,7 @@ public final class Dungeon extends JavaPlugin {
         getCommand("createtin").setExecutor(staffCommands);
         getCommand("spawnerstart").setExecutor(staffCommands);
         getCommand("spawnfarmer").setExecutor(staffCommands);
+        getCommand("spawnmayor").setExecutor(staffCommands);
         getCommand("givecoinbag").setExecutor(staffCommands);
 
         SpawnerCommands spawnerCommands = new SpawnerCommands();
@@ -114,6 +118,7 @@ public final class Dungeon extends JavaPlugin {
         UpgradeManager.init();
         OreItemManager.init();
         CoinBagManager.init();
+        QuestItemManager.init();
 
         SharpenerRecipes.init();
         SpearRecipes.init();

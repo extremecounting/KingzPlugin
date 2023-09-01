@@ -40,7 +40,5 @@ public class SharpenerRecipes {
 
 
         pSharpener = shapelessRecipe;
-
     }
-
 }

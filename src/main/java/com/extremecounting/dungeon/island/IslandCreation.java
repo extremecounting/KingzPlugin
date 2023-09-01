@@ -75,5 +75,4 @@ public class IslandCreation {
 
         player.teleport(islandLocation.add(0, 2, 0));
     }
-
 }
