@@ -34,15 +34,19 @@ public class SpawnerUtil {
             public void run() {
                 if (spawnerOn) {
                     for (BanditSpawner banditSpawner : banditSpawners) {
-                        if (!banditSpawner.maxMobsReached()) {
-                            banditSpawner.spawnBandit();
-                            banditSpawner.mobsIntIncr();
+                        for (int i = 0; i < banditSpawner.mobsPerSpawn; i++) {
+                            if (!banditSpawner.maxMobsReached()) {
+                                banditSpawner.spawnBandit();
+                                banditSpawner.mobsIntIncr();
+                            }
                         }
                     }
                     for (HogSpawner hogSpawner : hogSpawners) {
-                        if (!hogSpawner.maxMobsReached()) {
-                            hogSpawner.spawnHog();
-                            hogSpawner.mobsIntIncr();
+                        for (int i = 0; i < hogSpawner.mobsPerSpawn; i++) {
+                            if (!hogSpawner.maxMobsReached()) {
+                                hogSpawner.spawnHog();
+                                hogSpawner.mobsIntIncr();
+                            }
                         }
                     }
                 }

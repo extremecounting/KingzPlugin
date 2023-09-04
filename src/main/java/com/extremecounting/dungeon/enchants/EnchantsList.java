@@ -14,15 +14,15 @@ public class EnchantsList {
         createEnchant(meleeEnchants, "§7Poison ", "poison");
         createEnchant(meleeEnchants, "§7Scavenger ", "scavenger");
         createEnchant(meleeEnchants, "§7Serrated ", "serrated");
-        createEnchant(meleeEnchants, "§7Reinforced ", "reinforced");
+        //createEnchant(meleeEnchants, "§7Reinforced ", "reinforced"); stupid enchant
         createEnchant(meleeEnchants, "§7Bloodlust ", "bloodlust");
         createEnchant(meleeEnchants, "§7First Strike ", "firststrike");
         createEnchant(meleeEnchants, "§7Rampage ", "rampage");
 
-        createEnchant(pickEnchants, "§7Reinforced ", "reinforced");
+        //createEnchant(pickEnchants, "§7Reinforced ", "reinforced"); stupid enchant
         createEnchant(pickEnchants, "§7Molten Touch ", "moltentouch");
 
-        createEnchant(armorEnchants, "§7Reinforced ", "reinforced");
+        //createEnchant(armorEnchants, "§7Reinforced ", "reinforced"); stupid enchant
     }
 
     private static void createEnchant(HashMap<String, String> map, String enchant, String name) {

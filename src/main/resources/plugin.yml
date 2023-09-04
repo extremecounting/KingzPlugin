@@ -70,3 +70,12 @@ commands:
   tpdeny:
     description: Deny teleportation request
     usage: /<command> <arg>
+  giverapture:
+    description: gives all rapture books
+    usage: /<command>
+  givepoisons:
+    description: gives all poison books
+    usage: /<command>
+  givescavenger:
+    description: gives all scavenger books
+    usage: /<command>

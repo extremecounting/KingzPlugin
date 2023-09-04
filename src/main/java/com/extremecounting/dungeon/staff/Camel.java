@@ -29,14 +29,15 @@ public class Camel {
         Collection<? extends Player> players = Bukkit.getOnlinePlayers();
         List<Entity> entities = new ArrayList<>();
         for (Player player : players) {
+            Bukkit.broadcastMessage("Found: " + player.getName());
             entities.addAll(player.getWorld().getEntities());
         }
         for (Entity entity : entities) {
             if (entity.getType() == EntityType.CAMEL && entity.getCustomName().equalsIgnoreCase("Jester")) {
-                return;
+                continue;
             }
             if (entity.getType() == EntityType.VILLAGER) {
-                return;
+                continue;
             }
             entity.remove();
         }
