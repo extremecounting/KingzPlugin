@@ -12,6 +12,7 @@ public class BookManager {
     public static List<ItemStack> rapture;
     public static List<ItemStack> poison;
     public static List<ItemStack> scavenger;
+    public static List<ItemStack> serrated;
 
     public static void init() {
         createRapture();

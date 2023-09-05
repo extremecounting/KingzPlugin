@@ -2,10 +2,7 @@ package com.extremecounting.dungeon;
 
 import com.extremecounting.dungeon.crafting.upgrades.SharpenerRecipes;
 import com.extremecounting.dungeon.crafting.weapons.SpearRecipes;
-import com.extremecounting.dungeon.enchants.EnchantUtil;
-import com.extremecounting.dungeon.enchants.Poison;
-import com.extremecounting.dungeon.enchants.Rapture;
-import com.extremecounting.dungeon.enchants.Scavenger;
+import com.extremecounting.dungeon.enchants.*;
 import com.extremecounting.dungeon.events.BlockBreakDing;
 import com.extremecounting.dungeon.events.FarmlandDestroy;
 import com.extremecounting.dungeon.events.InteractEvent;
@@ -63,6 +60,7 @@ public final class Dungeon extends JavaPlugin {
 
         Commands.plugin = this;
         SpawnerUtil.pluginInstance = this;
+        Serrated.pluginInstance = this;
 
         SpawnerUtil.getBanditSpawners("banditspawner");
         SpawnerUtil.spawnerOn = true;
