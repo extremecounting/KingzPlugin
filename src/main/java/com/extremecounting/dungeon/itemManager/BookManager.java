@@ -18,6 +18,7 @@ public class BookManager {
         createRapture();
         createPoison();
         createScavenger();
+        createSerrated();
     }
 
     public static void createRapture() {
@@ -58,6 +59,19 @@ public class BookManager {
         scavenger.add(createBook("§fScavenger VIII", "§fGives chance for enemies to drop coins", "§fIncreased by 245%"));
         scavenger.add(createBook("§fScavenger IX", "§fGives chance for enemies to drop coins", "§fIncreased by 280%"));
         scavenger.add(createBook("§fScavenger X", "§fGives chance for enemies to drop coins", "§fIncreased by 315%"));
+    }
+
+    public static void createSerrated() {
+        serrated.add(createBook("§fSerrated I", "§fGives chance for enemies to bleed out"));
+        serrated.add(createBook("§fSerrated II", "§fGives chance for enemies to bleed out"));
+        serrated.add(createBook("§fSerrated III", "§fGives chance for enemies to bleed out"));
+        serrated.add(createBook("§fSerrated IV", "§fGives chance for enemies to bleed out"));
+        serrated.add(createBook("§fSerrated V", "§fGives chance for enemies to bleed out"));
+        serrated.add(createBook("§fSerrated VI", "§fGives chance for enemies to bleed out"));
+        serrated.add(createBook("§fSerrated VII", "§fGives chance for enemies to bleed out"));
+        serrated.add(createBook("§fSerrated VIII", "§fGives chance for enemies to bleed out"));
+        serrated.add(createBook("§fSerrated IX", "§fGives chance for enemies to bleed out"));
+        serrated.add(createBook("§fSerrated X", "§fGives chance for enemies to bleed out"));
     }
 
     public static ItemStack createBook(String name, String lore1) {
