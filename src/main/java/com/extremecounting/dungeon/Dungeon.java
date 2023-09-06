@@ -2,6 +2,7 @@ package com.extremecounting.dungeon;
 
 import com.extremecounting.dungeon.crafting.upgrades.SharpenerRecipes;
 import com.extremecounting.dungeon.crafting.weapons.SpearRecipes;
+import com.extremecounting.dungeon.enchants.*;
 import com.extremecounting.dungeon.events.BlockBreakDing;
 import com.extremecounting.dungeon.events.FarmlandDestroy;
 import com.extremecounting.dungeon.events.InteractEvent;
@@ -10,6 +11,7 @@ import com.extremecounting.dungeon.island.IslandCommands;
 import com.extremecounting.dungeon.island.IslandUtility;
 import com.extremecounting.dungeon.itemManager.*;
 import com.extremecounting.dungeon.mobs.*;
+import com.extremecounting.dungeon.npcs.Banker;
 import com.extremecounting.dungeon.npcs.Mayor;
 import com.extremecounting.dungeon.npcs.TobiasF;
 import com.extremecounting.dungeon.player.DropItem;
@@ -29,7 +31,6 @@ public final class Dungeon extends JavaPlugin {
     public static File usersFolder;
     public static File islandFolder;
     public static File spawnerFolder;
-
     public static NamespacedKey mainNameSpacedKey;
 
     public NamespacedKey createKey(String name) {
@@ -39,12 +40,10 @@ public final class Dungeon extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-
         if (!getDataFolder().exists()) {
             getDataFolder().mkdir();
         }
         this.saveDefaultConfig();
-
 
         usersFolder = new File(this.getDataFolder(), "players");
         usersFolder.mkdirs();
@@ -59,9 +58,9 @@ public final class Dungeon extends JavaPlugin {
             e.printStackTrace();
         }
 
-
         Commands.plugin = this;
         SpawnerUtil.pluginInstance = this;
+        Serrated.pluginInstance = this;
 
         SpawnerUtil.getBanditSpawners("banditspawner");
         SpawnerUtil.spawnerOn = true;
@@ -75,12 +74,15 @@ public final class Dungeon extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new Damage(), this);
         Bukkit.getPluginManager().registerEvents(new DropItem(), this);
         Bukkit.getPluginManager().registerEvents(new FarmlandDestroy(), this);
-
+        Bukkit.getPluginManager().registerEvents(new Banker(), this);
+        Bukkit.getPluginManager().registerEvents(new Rapture(), this);
+        Bukkit.getPluginManager().registerEvents(new Poison(), this);
+        Bukkit.getPluginManager().registerEvents(new Scavenger(), this);
         Bukkit.getPluginManager().registerEvents(new TobiasF(), this);
         Bukkit.getPluginManager().registerEvents(new Mayor(), this);
+        Bukkit.getPluginManager().registerEvents(new EnchantUtil(), this);
 
         mainNameSpacedKey = new NamespacedKey(this, "Dungeon");
-
 
         Commands commands = new Commands();
         getCommand("day").setExecutor(commands);
@@ -106,6 +108,9 @@ public final class Dungeon extends JavaPlugin {
         getCommand("spawnfarmer").setExecutor(staffCommands);
         getCommand("spawnmayor").setExecutor(staffCommands);
         getCommand("givecoinbag").setExecutor(staffCommands);
+        getCommand("giverapture").setExecutor(staffCommands);
+        getCommand("givepoison").setExecutor(staffCommands);
+        getCommand("givescavenger").setExecutor(staffCommands);
 
         SpawnerCommands spawnerCommands = new SpawnerCommands();
         getCommand("spawnertest").setExecutor(spawnerCommands);
@@ -119,6 +124,7 @@ public final class Dungeon extends JavaPlugin {
         OreItemManager.init();
         CoinBagManager.init();
         QuestItemManager.init();
+        BookManager.init();
 
         SharpenerRecipes.init();
         SpearRecipes.init();
@@ -131,7 +137,6 @@ public final class Dungeon extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-
         Camel.cleanEntities();
 
     }

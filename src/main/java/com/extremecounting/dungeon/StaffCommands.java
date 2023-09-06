@@ -1,5 +1,6 @@
 package com.extremecounting.dungeon;
 
+import com.extremecounting.dungeon.itemManager.BookManager;
 import com.extremecounting.dungeon.itemManager.CoinBagManager;
 import com.extremecounting.dungeon.mining.OreBlocks;
 import com.extremecounting.dungeon.mobs.SpawnerUtil;
@@ -12,6 +13,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class StaffCommands implements CommandExecutor {
 
@@ -38,6 +40,7 @@ public class StaffCommands implements CommandExecutor {
         }
         if (cmd.getName().equalsIgnoreCase("cleane")) {
             if (player.getName().equalsIgnoreCase("extremecounting") || player.getName().equalsIgnoreCase("cultivized")) {
+                player.sendMessage("§aCleaning entities...");
                 Camel.cleanEntities();
             }
         }
@@ -58,6 +61,21 @@ public class StaffCommands implements CommandExecutor {
         }
         if (cmd.getName().equalsIgnoreCase("givecoinbag")) {
             player.getInventory().addItem(CoinBagManager.coinBag);
+        }
+        if (cmd.getName().equalsIgnoreCase("giverapture")) {
+            for (ItemStack item : BookManager.rapture) {
+                player.getInventory().addItem(item);
+            }
+        }
+        if (cmd.getName().equalsIgnoreCase("givepoison")) {
+            for (ItemStack item : BookManager.poison) {
+                player.getInventory().addItem(item);
+            }
+        }
+        if (cmd.getName().equalsIgnoreCase("givescavenger")) {
+            for (ItemStack item : BookManager.scavenger) {
+                player.getInventory().addItem(item);
+            }
         }
         return true;
     }

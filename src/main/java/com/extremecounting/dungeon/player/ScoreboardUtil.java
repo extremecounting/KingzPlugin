@@ -15,10 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 public class ScoreboardUtil {
-
-
-
-
+    
 
     public static void setupScoreboard(Player player) {
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();

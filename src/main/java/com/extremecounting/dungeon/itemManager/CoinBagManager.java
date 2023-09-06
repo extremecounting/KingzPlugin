@@ -11,10 +11,18 @@ import java.util.List;
 public class CoinBagManager {
 
     public static ItemStack coinBag;
+    public static ItemStack tinCoin;
+    public static ItemStack copperCoin;
+    public static ItemStack silverCoin;
+    public static ItemStack goldCoin;
 
 
     public static void init() {
         createCoinBag();
+        createTinCoin();
+        createCopperCoin();
+        createSilverCoin();
+        createGoldCoin();
     }
 
     private static void createCoinBag() {
@@ -30,5 +38,49 @@ public class CoinBagManager {
         meta.setLore(lore);
         item.setItemMeta(meta);
         coinBag = item;
+    }
+
+    private static void createTinCoin() {
+        ItemStack item = new ItemStack(Material.IRON_NUGGET, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§fConvert to Tin Coins");
+        List<String> lore = new ArrayList<>();
+        lore.add("§fConvert coins into tin coins");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        tinCoin = item;
+    }
+
+    private static void createCopperCoin() {
+        ItemStack item = new ItemStack(Material.COPPER_INGOT, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§fConvert to Copper Coins");
+        List<String> lore = new ArrayList<>();
+        lore.add("§fConvert coins into copper coins");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        copperCoin = item;
+    }
+
+    private static void createSilverCoin() {
+        ItemStack item = new ItemStack(Material.IRON_INGOT, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§fConvert to Silver Coins");
+        List<String> lore = new ArrayList<>();
+        lore.add("§fConvert coins into silver coins");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        silverCoin = item;
+    }
+
+    private static void createGoldCoin() {
+        ItemStack item = new ItemStack(Material.GOLD_INGOT, 1);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName("§fConvert to Gold Coins");
+        List<String> lore = new ArrayList<>();
+        lore.add("§fConvert coins into gold coins");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        goldCoin = item;
     }
 }
