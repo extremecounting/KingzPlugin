@@ -112,7 +112,6 @@ public class Quest {
         return  mobAmount;
     }
 
-
     public void setName(String name) {
         this.name = name;
     }
