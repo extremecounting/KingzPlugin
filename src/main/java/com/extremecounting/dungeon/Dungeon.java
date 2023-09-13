@@ -61,6 +61,7 @@ public final class Dungeon extends JavaPlugin {
         Commands.plugin = this;
         SpawnerUtil.pluginInstance = this;
         Serrated.pluginInstance = this;
+        SpawnerUtil.pluginInstance = this;
 
         SpawnerUtil.getBanditSpawners("banditspawner");
         SpawnerUtil.spawnerOn = true;
