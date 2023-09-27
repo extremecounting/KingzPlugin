@@ -9,20 +9,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.List;
 import java.util.Random;
 
-public class Freeze {
-
-    Player player;
-    int intensity;
+public class Freeze extends BaseSpell {
 
 
     public Freeze(Player player, int intensity) {
-        this.player = player;
-        this.intensity = intensity;
+        super(player, intensity);
     }
 
     public Freeze(Player player) {
-        this.player = player;
-        this.intensity = 1;
+        super(player);
     }
 
     public void effect() {

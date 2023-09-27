@@ -9,21 +9,17 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.List;
 import java.util.Random;
 
-public class Vampire {
+public class Vampire extends BaseSpell {
     public static Plugin pluginInstance;
 
-    Player player;
-    int intensity;
-
     public Vampire(Player player, int intensity) {
-        this.player = player;
-        this.intensity = intensity;
+        super(player, intensity);
     }
 
     public Vampire(Player player) {
-        this.player = player;
-        this.intensity = 1;
+        super(player);
     }
+
 
     public void effect() {
         SpellUtil.createParticleRing(player, Particle.REDSTONE, 5);
