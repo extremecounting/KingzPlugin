@@ -40,7 +40,6 @@ public class OreBlocks implements Listener {
         }
     }
 
-
     private void tinBreak(Player player) {
         player.getInventory().addItem(OreItemManager.tinOre);
     }

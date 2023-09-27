@@ -17,6 +17,7 @@ import com.extremecounting.dungeon.npcs.TobiasF;
 import com.extremecounting.dungeon.player.DropItem;
 import com.extremecounting.dungeon.rpg.Kills;
 import com.extremecounting.dungeon.skills.Damage;
+import com.extremecounting.dungeon.spells.Vampire;
 import com.extremecounting.dungeon.staff.Camel;
 import com.extremecounting.dungeon.staff.KillMobs;
 import org.bukkit.Bukkit;
@@ -62,6 +63,7 @@ public final class Dungeon extends JavaPlugin {
         SpawnerUtil.pluginInstance = this;
         Serrated.pluginInstance = this;
         SpawnerUtil.pluginInstance = this;
+        Vampire.pluginInstance = this;
 
         SpawnerUtil.getBanditSpawners("banditspawner");
         SpawnerUtil.spawnerOn = true;
